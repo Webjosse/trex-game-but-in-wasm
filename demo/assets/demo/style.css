@@ -1,0 +1,1 @@
+body{    display:flex;    flex-direction:column;    align-items: center}#game{    width:75.5vw;    height: 18.8vw;    margin:auto;}.dev-body #game{    background-image: url('./reference_bg.png');    background-size:cover ;    border: solid 1px black;}

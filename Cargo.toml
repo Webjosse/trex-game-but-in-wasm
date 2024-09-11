@@ -28,7 +28,7 @@ wee_alloc = { version = "0.4.5", optional = true }
 
 [dependencies.web-sys]
 version = "0.3.70"
-features = [ "HtmlCanvasElement", "CanvasRenderingContext2d", "console" ]
+features = [ "HtmlCanvasElement", "CanvasRenderingContext2d", "HtmlImageElement", "console" ]
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.13"
