@@ -6,6 +6,8 @@ use web_sys::CanvasRenderingContext2d;
 use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
 
+/// A controller is an entity manager, it processes and updates entities at each update. \
+/// An [`EngineEntity`] can be deleted or added using [`EngineEntity::is_active`] and [`EngineEntity::entities_to_create`]
 pub struct GameController{
     entities: VecDeque<Box<dyn EngineEntity>>,
 }

@@ -24,3 +24,11 @@ For production: `npm run build`
 ## Dependencies
 * wasm-pack (including web-sys `0.3.70`)
 * webpack
+
+## Special thanks
+| I asked some help to understand Rust:        |
+|----------------------------------------------|
+| [@Reachip](https://github.com/Reachip)       |
+| [@i5.650](https://github.com/i5-650)         |
+| [@PowerPixel](https://github.com/PowerPixel) |
+|                                              |

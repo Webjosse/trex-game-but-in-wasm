@@ -20,6 +20,8 @@ pub fn new_updater(controllers: Vec<GameController>, config: EngineConfig) -> Ga
 
 #[wasm_bindgen]
 impl GameRunner {
+    /// Updates the canvas
+    /// * `delta` the milliseconds elapsed since last update (maximum 80ms please)
     pub fn update(&mut self, delta: u16) -> Result<(), JsValue>{
         for controller in &mut self.controllers.iter_mut() {
             let err = controller.process(delta).err();
@@ -32,6 +34,7 @@ impl GameRunner {
         Ok(())
     }
 
+    /// Sends an event from the DOM
     pub fn send(&mut self, evt: Option<Event>){
         if evt.is_some(){
             transform_event(&evt.unwrap(), self);

@@ -23,7 +23,7 @@ pub const CANVAS_H: f64 = 160.0;
 
 pub const CANVAS_W: f64 = 514.0;
 
-/// floor level
+/// floor level: y position of the floor
 const FLOOR_LEVEL: f64 = CANVAS_H - 11.0;
 
 
@@ -55,6 +55,7 @@ fn get_context(canvas: Option<HtmlCanvasElement>) -> Result<CanvasRenderingConte
     Ok(canvas.unwrap().get_context("2d").unwrap().unwrap().dyn_into().unwrap())
 }
 
+/// Creates a [`GameRunner`] from a canvas
 #[wasm_bindgen]
 pub fn init(canvas: Option<HtmlCanvasElement>) -> Option<GameRunner> {
     let controllers = init_controllers();

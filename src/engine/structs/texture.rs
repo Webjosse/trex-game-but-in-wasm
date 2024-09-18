@@ -2,6 +2,7 @@ use wasm_bindgen::JsValue;
 use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
 use crate::engine::structs::rect::Rect;
 
+/// Basically a drawable without the destination, from an [`HtmlImageElement`]  and a [`Rect`]
 #[derive(Clone)]
 pub struct Texture {
     img: HtmlImageElement,

@@ -4,6 +4,7 @@ use wasm_bindgen::JsValue;
 use web_sys::CanvasRenderingContext2d;
 use crate::engine::traits::drawable::Drawable;
 
+/// Contains a [`Texture`] and a [`Rect`] to draw it in
 #[derive(Clone)]
 pub struct Sprite {
     texture: Texture,

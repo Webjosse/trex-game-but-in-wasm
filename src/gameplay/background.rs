@@ -5,7 +5,7 @@ use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::EngineEntity;
 use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
-use crate::gameplay::{CANVAS_H, CANVAS_W};
+use crate::gameplay::{CANVAS_H, CANVAS_W, FLOOR_LEVEL};
 use std::cell::RefCell;
 use std::ops::Deref;
 use std::rc::Rc;
@@ -31,7 +31,7 @@ impl BgEntity {
             Texture::new(image_sheet.clone(), Rect{x:0.0,y:52.0,w:1204.0,h:16.0})
         );
         sprite.set_size(BG_W, 16.0);
-        sprite.set_y(CANVAS_H - 22.0);
+        sprite.set_y(FLOOR_LEVEL - 11.0);
 
         let sprite_2 = sprite.clone();
 
