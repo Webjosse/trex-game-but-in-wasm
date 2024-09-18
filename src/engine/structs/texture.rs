@@ -9,7 +9,7 @@ pub struct Texture {
 }
 
 impl Texture {
-    pub fn new(img: HtmlImageElement, src_rect: Rect) -> Self {
+    pub fn new(img: HtmlImageElement, src_rect: Rect) -> Texture {
         Texture { img, src_rect }
     }
 

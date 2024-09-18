@@ -8,9 +8,9 @@ use crate::engine::traits::processable::Processable;
 use crate::events::binding::EventId;
 use std::array::from_fn;
 use wasm_bindgen::JsValue;
-use web_sys::console::debug_1;
-use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
 use web_sys::js_sys::Math;
+use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
+use crate::gameplay::FLOOR_LEVEL;
 
 fn init_dino_textures(img_sheet: &HtmlImageElement) -> [Texture;5]{
     from_fn(|i| {
@@ -24,6 +24,7 @@ fn init_dino_sneak_textures(img_sheet: &HtmlImageElement) -> [Texture;2]{
     })
 }
 
+const Y_BASE:f64 = FLOOR_LEVEL - 49.0;
 
 pub struct DinoEntity {
     sprite: Sprite,
@@ -37,7 +38,6 @@ pub struct DinoEntity {
     remaining_ms: u16
 }
 
-const Y_BASE: f64 = 132.0;
 const JUMP_FORCE: f64 = 12.0;
 const TIME_JUMP: f64 = 30.0;
 
@@ -111,7 +111,6 @@ impl DinoEntity {
 impl Drawable for DinoEntity {
     fn draw(&self, ctx: &CanvasRenderingContext2d) -> Result<(), JsValue> {
         if self.sneaking && self.on_roof {
-            debug_1(&"sneakdraw".to_string().into());
             self.sneak_sprite.draw(ctx)
         } else {
             self.sprite.draw(ctx)
@@ -141,12 +140,4 @@ impl EventListener for DinoEntity {
     }
 }
 
-impl EngineEntity for DinoEntity {
-    fn is_active(&self) -> bool {
-        true
-    }
-
-    fn to_create(&self) -> Vec<Box<&dyn EngineEntity>> {
-        Vec::new()
-    }
-}
+impl EngineEntity for DinoEntity {}

@@ -11,7 +11,7 @@ pub struct Sprite {
 }
 
 impl Sprite {
-    pub fn new(texture: Texture) -> Self {
+    pub fn new(texture: Texture) -> Sprite {
         let rect = texture.get_rect().clone();
         Sprite { texture, rect: Rect{x:0.0,y:0.0,w:rect.w,h:rect.h} }
     }

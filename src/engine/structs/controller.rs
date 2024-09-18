@@ -1,3 +1,4 @@
+use std::collections::VecDeque;
 use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::EngineEntity;
 use wasm_bindgen::JsValue;
@@ -6,16 +7,16 @@ use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
 
 pub struct GameController{
-    entities: Vec<Box<dyn EngineEntity>>,
+    entities: VecDeque<Box<dyn EngineEntity>>,
 }
 
 impl GameController{
-    pub fn new() -> Self {
-        GameController { entities: Vec::new() }
+    pub fn new() -> GameController {
+        GameController { entities: VecDeque::new() }
     }
 
     pub fn add_entity(&mut self, entity: Box<dyn EngineEntity>){
-        self.entities.push(entity);
+        self.entities.push_back(entity);
     }
 }
 
@@ -29,14 +30,18 @@ impl Drawable for GameController{
 
 impl Processable for GameController{
     fn process(&mut self, delta_ms: u16) -> Result<(), JsValue> {
-        let mut new_entities: Vec<Box<&dyn EngineEntity>> = Vec::new();
-        for entity in &mut self.entities {
-            (*entity).process(delta_ms)?;
+        let mut new_entities: VecDeque<Box<dyn EngineEntity>> = VecDeque::new();
+        while let Some(mut entity) = self.entities.pop_front(){
+            entity.process(delta_ms)?;
+            let mut entities_to_create = entity.entities_to_create();
             if entity.is_active() {
-                new_entities.push(Box::new(&**entity));
+                new_entities.push_back(entity);
             }
-            new_entities.extend(entity.to_create());
-        };
+            while let Some(entity_to_create) = entities_to_create.pop_front(){
+                new_entities.push_back(entity_to_create);
+            }
+        }
+        self.entities = new_entities;
         Ok(())
     }
 }
