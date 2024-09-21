@@ -1,5 +1,5 @@
-use web_sys::CanvasRenderingContext2d;
+use web_sys::HtmlCanvasElement;
 
 pub struct EngineConfig{
-    pub ctx: CanvasRenderingContext2d
+    pub canvas: HtmlCanvasElement,
 }

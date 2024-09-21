@@ -4,6 +4,7 @@ use crate::engine::traits::drawable::Drawable;
 use wasm_bindgen::JsValue;
 use web_sys::console::debug_1;
 use web_sys::CanvasRenderingContext2d;
+use crate::gameplay::gamedata::GameData;
 
 pub struct AbstractObstacle{
     sprite: Sprite,
@@ -16,7 +17,7 @@ impl AbstractObstacle {
     }
 
     pub fn approach(&mut self, delta_ms: u16, speed:f64){
-        let min_x = (delta_ms as f64) * 0.7 * speed;
+        let min_x = (delta_ms as f64) * speed;
         self.sprite.set_x(self.sprite.get_rect().x - min_x);
         self.rect.x -= min_x;
         debug_1(&format!("Approaching by {} : {}", min_x, self.sprite.get_rect().x).into());
@@ -25,6 +26,13 @@ impl AbstractObstacle {
     pub fn is_alive(&self) -> bool{
         let rect = self.sprite.get_rect();
         (rect.x + rect.w) > 0.0
+    }
+
+    pub fn process_collision(&self, data: &mut GameData){
+        if data.dino_collision.collides(&self.rect) {
+            data.pause = true;
+            data.game_over = true;
+        }
     }
 }
 

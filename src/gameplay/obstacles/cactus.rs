@@ -28,7 +28,11 @@ impl CactusEntity{
         let mut sprite = Sprite::new(texture);
         sprite.set_x(CANVAS_W);
         sprite.set_y(FLOOR_LEVEL - sprite.get_rect().h);
-        let rect = sprite.get_rect().clone();
+        let mut rect = sprite.get_rect().clone();
+        rect.x += 5.0;
+        rect.w -= 10.0;
+        rect.y += 5.0;
+        rect.h -= 5.0;
         CactusEntity{
             obstacle: AbstractObstacle::new(sprite, rect)
         }
@@ -44,6 +48,7 @@ impl Processable<GameData> for CactusEntity {
     fn process(&mut self, delta_ms: u16, data: &mut GameData) -> Result<(), JsValue> {
         if data.pause { return Ok(())}
         self.obstacle.approach(delta_ms, data.speed);
+        self.obstacle.process_collision(data);
         Ok(())
     }
 }

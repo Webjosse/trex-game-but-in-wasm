@@ -36,7 +36,9 @@ pub struct DinoEntity {
     jump: bool,
     on_roof: bool,
     jump_y: f64,
-    remaining_ms: u16
+    remaining_ms: u16,
+    damage:bool,
+    dino_damage: Sprite
 }
 
 const JUMP_FORCE: f64 = 12.0;
@@ -44,7 +46,7 @@ const TIME_JUMP: f64 = 30.0;
 
 impl DinoEntity {
     pub fn new(image_sheet: &HtmlImageElement) -> DinoEntity {
-        let [_dino_still, _dino_still2, dino_run, dino_run2, _dino_damage] = init_dino_textures(image_sheet);
+        let [_dino_still, _dino_still2, dino_run, dino_run2, dino_damage] = init_dino_textures(image_sheet);
         let [dino_sneak1, dino_sneak2] = init_dino_sneak_textures(image_sheet);
         let mut sprite = Sprite::new(dino_run);
         sprite.set_y(Y_BASE);
@@ -61,7 +63,9 @@ impl DinoEntity {
             remaining_ms: 1,
             jump: false,
             on_roof: true,
-            jump_y: 0.0
+            jump_y: 0.0,
+            damage: false,
+            dino_damage: Sprite::new(dino_damage)
         }
     }
 
@@ -111,6 +115,9 @@ impl DinoEntity {
     }
 
     fn get_drawn_sprite(&self) -> &Sprite{
+        if self.damage{
+            return &self.dino_damage;
+        }
         if self.sneaking && self.on_roof {
             &self.sneak_sprite
         } else {
@@ -136,6 +143,8 @@ impl Drawable for DinoEntity {
 impl Processable<GameData> for DinoEntity {
 
     fn process(&mut self, delta_ms: u16, data: &mut GameData) -> Result<(), JsValue> {
+        self.damage = data.game_over;
+        if self.damage { self.dino_damage.set_pos(self.sprite.get_rect().x, self.sprite.get_rect().y); }
         if data.pause { return Ok(())}
         self.process_jump(delta_ms);
         if self.process_remaining(delta_ms){ self.swap_run(); }

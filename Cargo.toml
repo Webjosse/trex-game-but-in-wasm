@@ -29,17 +29,7 @@ wee_alloc = { version = "0.4.5", optional = true }
 
 [dependencies.web-sys]
 version = "0.3.70"
-features = [
-    "HtmlElement",
-    "DomTokenList",
-    "HtmlCanvasElement",
-    "CanvasRenderingContext2d",
-    "HtmlImageElement",
-    "console",
-    "Window",
-    "Event",
-    "KeyboardEvent"
-]
+features = ["HtmlElement", "DomTokenList", "HtmlCanvasElement", "CanvasRenderingContext2d", "HtmlImageElement", "console", "Window", "Event", "KeyboardEvent", "Document"]
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.13"

@@ -4,7 +4,7 @@ const CANVAS = document.getElementById("game");
 
 const runner = init(CANVAS);
 
-const rate = 1000 / 30; //30 fps -> ms
+const rate = 1000 / 60; //30 fps -> ms
 
 
 
