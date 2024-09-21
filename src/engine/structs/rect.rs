@@ -1,4 +1,3 @@
-
 /// Defines a rectangle
 #[derive(Clone)]
 pub struct Rect {

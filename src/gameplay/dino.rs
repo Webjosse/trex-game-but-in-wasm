@@ -2,15 +2,16 @@ use crate::engine::structs::rect::Rect;
 use crate::engine::structs::sprite::Sprite;
 use crate::engine::structs::texture::Texture;
 use crate::engine::traits::drawable::Drawable;
-use crate::engine::traits::entity::EngineEntity;
+use crate::engine::traits::entity::{EngineEntity, StaticEntity};
 use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
 use crate::events::binding::EventId;
+use crate::gameplay::gamedata::GameData;
+use crate::gameplay::FLOOR_LEVEL;
 use std::array::from_fn;
 use wasm_bindgen::JsValue;
 use web_sys::js_sys::Math;
 use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
-use crate::gameplay::FLOOR_LEVEL;
 
 fn init_dino_textures(img_sheet: &HtmlImageElement) -> [Texture;5]{
     from_fn(|i| {
@@ -99,8 +100,26 @@ impl DinoEntity {
         self.sprite.set_y(y_from_floor);
     }
 
+    fn process_collision(&mut self, data: &mut GameData){
+        let d_rect = self.get_drawn_sprite().get_rect();
+        // edit rect for collision
+        let c_rect = Rect {
+            x: d_rect.x+10.0, y: d_rect.y,
+            w: d_rect.w-20.0, h: d_rect.h
+        };
+        data.dino_collision = c_rect;
+    }
+
+    fn get_drawn_sprite(&self) -> &Sprite{
+        if self.sneaking && self.on_roof {
+            &self.sneak_sprite
+        } else {
+            &self.sprite
+        }
+    }
+
     fn swap_run(&mut self){
-        if self.sneaking & !self.on_roof {
+        if self.sneaking & self.on_roof {
             self.sneak_run_texture = self.sneak_sprite.replace_texture(self.sneak_run_texture.clone());
         } else {
             self.run_texture = self.sprite.replace_texture(self.run_texture.clone());
@@ -110,19 +129,17 @@ impl DinoEntity {
 
 impl Drawable for DinoEntity {
     fn draw(&self, ctx: &CanvasRenderingContext2d) -> Result<(), JsValue> {
-        if self.sneaking && self.on_roof {
-            self.sneak_sprite.draw(ctx)
-        } else {
-            self.sprite.draw(ctx)
-        }
+        self.get_drawn_sprite().draw(ctx)
     }
 }
 
-impl Processable for DinoEntity {
+impl Processable<GameData> for DinoEntity {
 
-    fn process(&mut self, delta_ms: u16) -> Result<(), JsValue> {
+    fn process(&mut self, delta_ms: u16, data: &mut GameData) -> Result<(), JsValue> {
+        if data.pause { return Ok(())}
         self.process_jump(delta_ms);
         if self.process_remaining(delta_ms){ self.swap_run(); }
+        self.process_collision(data);
         Ok(())
     }
 }
@@ -140,4 +157,5 @@ impl EventListener for DinoEntity {
     }
 }
 
-impl EngineEntity for DinoEntity {}
+impl StaticEntity<GameData> for DinoEntity {}
+impl EngineEntity<GameData> for DinoEntity {}

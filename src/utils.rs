@@ -1,4 +1,4 @@
-pub mod random_poisson;
+pub mod random_call;
 
 #[allow(dead_code)]
 pub fn set_panic_hook() {

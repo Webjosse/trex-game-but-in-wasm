@@ -18,5 +18,5 @@ pub struct Event{
 
 #[allow(dead_code)]
 pub trait EventListener {
-    fn handle(&mut self, evt: &Event) -> bool;
+    fn handle(&mut self, _evt: &Event) -> bool { false }
 }
