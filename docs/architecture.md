@@ -39,9 +39,12 @@ There is a hierarchy
         * texture -> A drawable
 
 ## Entities
-| Name          | Role                                  |
-|---------------|---------------------------------------|
-| BgEntity      | The background, with the floor        |
-| CloudsSpawner | Used to spawn the clouds              |
-| DinoEntity    | The dino                              |
-| SpeedEntity   | Used only to increase speed over time |
+| Name            | Role                                    |
+|-----------------|-----------------------------------------|
+| RestartHandler  | Catches restart events if not GAME OVER |
+| BgEntity        | The background, with the floor          |
+| CloudsSpawner   | Used to spawn the clouds                |
+| DinoEntity      | The dino                                |
+| ObstacleSpawner | Used to spawn the obstacles             |
+| SpeedEntity     | Used only to increase speed over time   |
+| GameOverEntity  | Displays "GAME OVER"                    |
