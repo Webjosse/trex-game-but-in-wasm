@@ -3,7 +3,7 @@ use crate::engine::structs::sprite::Sprite;
 use crate::engine::structs::texture::Texture;
 use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::{EngineEntity, StaticEntity};
-use crate::engine::traits::events::EventListener;
+use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
 use crate::gameplay::gamedata::GameData;
 use crate::gameplay::obstacles::r#abstract::AbstractObstacle;
@@ -12,6 +12,7 @@ use wasm_bindgen::JsValue;
 use web_sys::js_sys::Math;
 use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
 use web_sys::console::debug_1;
+use crate::events::binding::EventId;
 
 fn init_a_small_cactus(image_sheet: &HtmlImageElement) -> Texture{
     let i = (Math::random() * 3.0).floor() as u8;
@@ -80,4 +81,11 @@ impl EngineEntity<GameData> for CactusEntity{
     }
 }
 
-impl EventListener for CactusEntity {}
+impl EventListener for CactusEntity {
+    fn handle(&mut self, evt: &Event) -> bool {
+        if evt.id == EventId::RestartPressEvent.as_int() {
+            self.obstacle.kill();
+        }
+        false
+    }
+}

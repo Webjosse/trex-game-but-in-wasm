@@ -27,6 +27,10 @@ impl AbstractObstacle {
         (rect.x + rect.w) > 0.0
     }
 
+    pub fn kill(&mut self){
+        self.sprite.set_x(-10.0-self.sprite.get_rect().w);
+    }
+
     pub fn process_collision(&self, data: &mut GameData){
         if data.dino_collision.collides(&self.rect) {
             data.pause = true;

@@ -3,7 +3,7 @@ use crate::engine::structs::sprite::Sprite;
 use crate::engine::structs::texture::Texture;
 use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::{EngineEntity, StaticEntity};
-use crate::engine::traits::events::EventListener;
+use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
 use crate::gameplay::gamedata::GameData;
 use crate::gameplay::obstacles::r#abstract::AbstractObstacle;
@@ -12,6 +12,7 @@ use wasm_bindgen::JsValue;
 use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
 use web_sys::js_sys::Math;
 use crate::engine::structs::rect::Rect;
+use crate::events::binding::EventId;
 
 const MAX_Y: f64 = FLOOR_LEVEL - 40.0;
 
@@ -69,7 +70,14 @@ impl Processable<GameData> for PteroEntity {
     }
 }
 
-impl EventListener for PteroEntity {}
+impl EventListener for PteroEntity {
+    fn handle(&mut self, evt: &Event) -> bool {
+        if evt.id == EventId::RestartPressEvent.as_int() {
+            self.obstacle.kill();
+        }
+        false
+    }
+}
 
 impl StaticEntity<GameData> for PteroEntity {}
 

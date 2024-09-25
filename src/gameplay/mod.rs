@@ -15,6 +15,8 @@ mod clouds;
 mod initializer;
 mod obstacles;
 mod gamedata;
+mod gameover;
+mod restarthandler;
 
 pub const CANVAS_H: f64 = 160.0;
 

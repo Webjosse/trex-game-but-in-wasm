@@ -9,6 +9,8 @@ use crate::gameplay::obstacles::ObstacleSpawner;
 use crate::gameplay::speed::SpeedEntity;
 use std::cell::RefCell;
 use web_sys::HtmlImageElement;
+use crate::gameplay::gameover::GameOverEntity;
+use crate::gameplay::restarthandler::RestartHandler;
 
 pub struct GameInitializer{
     img: HtmlImageElement,
@@ -26,6 +28,7 @@ impl GameInitializer{
     }
 
     fn init(&mut self){
+        self.controller.add_entity(Box::new(RestartHandler::new()));
         self.controller.add_entity(Box::new(
             BgEntity::new(&self.img)
         ));
@@ -41,6 +44,9 @@ impl GameInitializer{
         self.controller.add_entity(Box::new(
             SpeedEntity::new()
         ));
+        self.controller.add_entity(Box::new(
+            GameOverEntity::new(&self.img)
+        ))
 
     }
 
