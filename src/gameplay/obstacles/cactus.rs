@@ -11,7 +11,7 @@ use crate::gameplay::utils::gamedata::GameData;
 use crate::gameplay::{CANVAS_W, FLOOR_LEVEL};
 use wasm_bindgen::JsValue;
 use web_sys::js_sys::Math;
-use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
+use web_sys::{CanvasRenderingContext2d, HtmlAudioElement, HtmlImageElement};
 
 fn init_a_small_cactus(image_sheet: &HtmlImageElement) -> Texture{
     let i = (Math::random() * 3.0).floor() as u8;
@@ -30,7 +30,7 @@ pub struct CactusEntity{
 }
 
 impl CactusEntity{
-    fn new(texture: Texture) -> CactusEntity{
+    fn new(texture: Texture, audio: &HtmlAudioElement) -> CactusEntity{
         let mut sprite = Sprite::new(texture);
         sprite.set_x(CANVAS_W);
         sprite.set_y(FLOOR_LEVEL - sprite.get_rect().h);
@@ -40,19 +40,19 @@ impl CactusEntity{
         rect.y += 5.0;
         rect.h -= 5.0;
         CactusEntity{
-            obstacle: AbstractObstacle::new(sprite, rect)
+            obstacle: AbstractObstacle::new(sprite, rect, audio)
         }
     }
 
-    pub fn new_tiny(image_sheet: &HtmlImageElement) -> CactusEntity{
+    pub fn new_tiny(image_sheet: &HtmlImageElement, audio: &HtmlAudioElement) -> CactusEntity{
         let texture = init_a_small_cactus(image_sheet);
-        CactusEntity::new(texture)
+        CactusEntity::new(texture, audio)
     }
 
 
-    pub fn new_big(image_sheet: &HtmlImageElement) -> CactusEntity{
+    pub fn new_big(image_sheet: &HtmlImageElement, audio: &HtmlAudioElement) -> CactusEntity{
         let texture = init_a_big_cactus(image_sheet);
-        CactusEntity::new(texture)
+        CactusEntity::new(texture, audio)
     }
 }
 impl Drawable for CactusEntity {

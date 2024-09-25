@@ -11,7 +11,7 @@ use crate::gameplay::FLOOR_LEVEL;
 use std::array::from_fn;
 use wasm_bindgen::JsValue;
 use web_sys::js_sys::Math;
-use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
+use web_sys::{CanvasRenderingContext2d, HtmlAudioElement, HtmlImageElement};
 
 fn init_dino_textures(img_sheet: &HtmlImageElement) -> [Texture;5]{
     from_fn(|i| {
@@ -38,14 +38,15 @@ pub struct DinoEntity {
     jump_y: f64,
     remaining_ms: u16,
     damage:bool,
-    dino_damage: Sprite
+    dino_damage: Sprite,
+    audio: HtmlAudioElement
 }
 
 const JUMP_FORCE: f64 = 12.0;
 const TIME_JUMP: f64 = 20.0;
 
 impl DinoEntity {
-    pub fn new(image_sheet: &HtmlImageElement) -> DinoEntity {
+    pub fn new(image_sheet: &HtmlImageElement, audio: &HtmlAudioElement) -> DinoEntity {
         let [_dino_still, _dino_still2, dino_run, dino_run2, dino_damage] = init_dino_textures(image_sheet);
         let [dino_sneak1, dino_sneak2] = init_dino_sneak_textures(image_sheet);
         let mut sprite = Sprite::new(dino_run);
@@ -65,7 +66,8 @@ impl DinoEntity {
             on_roof: true,
             jump_y: 0.0,
             damage: false,
-            dino_damage: Sprite::new(dino_damage)
+            dino_damage: Sprite::new(dino_damage),
+            audio: audio.clone()
         }
     }
 
@@ -98,6 +100,7 @@ impl DinoEntity {
             self.jump_y -= delta * if self.sneaking { 3.0 } else { 1.0 };
         }
         if self.on_roof && self.jump {
+            let _ = self.audio.play();
             self.jump_y = JUMP_FORCE;
         }
         let y_from_floor = Math::min(y - self.jump_y * delta, Y_BASE);

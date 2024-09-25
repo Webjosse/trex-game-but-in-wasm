@@ -9,7 +9,7 @@ use crate::gameplay::utils::gamedata::GameData;
 use crate::gameplay::obstacles::r#abstract::AbstractObstacle;
 use crate::gameplay::{CANVAS_W, FLOOR_LEVEL};
 use wasm_bindgen::JsValue;
-use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
+use web_sys::{CanvasRenderingContext2d, HtmlAudioElement, HtmlImageElement};
 use web_sys::js_sys::Math;
 use crate::engine::structs::rect::Rect;
 use crate::events::binding::EventId;
@@ -29,7 +29,7 @@ pub struct PteroEntity{
 }
 
 impl PteroEntity{
-    pub fn new(image_sheet: &HtmlImageElement) -> PteroEntity{
+    pub fn new(image_sheet: &HtmlImageElement, audio: &HtmlAudioElement) -> PteroEntity{
         let [text1, text2] = init_ptero(image_sheet);
         let mut sprite = Sprite::new(text1);
         sprite.set_x(CANVAS_W);
@@ -40,7 +40,7 @@ impl PteroEntity{
         rect.y += 7.0;
         rect.h -= 14.0;
         PteroEntity{
-            obstacle: AbstractObstacle::new(sprite, rect),
+            obstacle: AbstractObstacle::new(sprite, rect, audio),
             fly_texture: text2,
             remaining_ms: 0
         }

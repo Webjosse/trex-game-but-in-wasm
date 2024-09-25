@@ -29,9 +29,9 @@ impl Processable<GameData> for DayNightEntity {
     fn process(&mut self, _delta_ms: u16, _data: &mut GameData) -> Result<(), JsValue>{
         if _data.game_over { self.next_switch = 700; }
         if _data.score > self.next_switch{
-            self.next_switch += (Math::random()*5.0).floor() as u64 * 100;
+            self.next_switch += (Math::random()*5.0).ceil() as u64 * 100;
             if let Some(f) = &self.fun {
-                f.call0(&JsValue::undefined()).unwrap();
+                f.call0(&JsValue::undefined())?;
             }
         }
         Ok(())

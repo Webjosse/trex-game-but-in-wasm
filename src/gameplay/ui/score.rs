@@ -5,7 +5,7 @@ use crate::engine::traits::processable::Processable;
 use crate::gameplay::utils::gamedata::GameData;
 use crate::gameplay::CANVAS_W;
 use wasm_bindgen::JsValue;
-use web_sys::CanvasRenderingContext2d;
+use web_sys::{CanvasRenderingContext2d, HtmlAudioElement};
 
 pub struct ScoreEntity{
     font_name: &'static str,
@@ -13,18 +13,20 @@ pub struct ScoreEntity{
     score_str: String,
     remaining_ds: u8,
     save_elapsed: u16,
-    blink_count: u16
+    blink_count: u16,
+    audio: HtmlAudioElement
 }
 
 impl ScoreEntity{
-    pub fn new(ft_name: &'static str) -> Self{
+    pub fn new(ft_name: &'static str, audio: &HtmlAudioElement) -> Self{
         ScoreEntity{
             font_name: ft_name,
             hi_str: "".to_string(),
             score_str: "00000".to_string(),
             remaining_ds: 0,
             save_elapsed: 0,
-            blink_count: 2000
+            blink_count: 2000,
+            audio: audio.clone()
         }
     }
 
@@ -44,7 +46,10 @@ impl ScoreEntity{
     }
 
     fn process_blink(&mut self, delta_ms: u16, should_blink: bool){
-        if should_blink { self.blink_count = 0}
+        if should_blink {
+            self.blink_count = 0;
+            let _ = self.audio.play();
+        }
         if self.blink_count > 2000{
             self.blink_count = 2000;
             return;

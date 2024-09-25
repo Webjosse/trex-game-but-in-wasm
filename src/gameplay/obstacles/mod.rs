@@ -11,31 +11,33 @@ use crate::gameplay::obstacles::cactus::CactusEntity;
 use crate::utils::random_call::MayCaller;
 use std::collections::VecDeque;
 use wasm_bindgen::JsValue;
-use web_sys::HtmlImageElement;
+use web_sys::{HtmlAudioElement, HtmlImageElement};
 use web_sys::js_sys::Math;
 use crate::gameplay::obstacles::ptero::PteroEntity;
 
 pub struct ObstacleSpawner{
     may_caller: MayCaller,
     to_create: Option<Box<dyn EngineEntity<GameData>>>,
-    img_sheet: HtmlImageElement
+    img_sheet: HtmlImageElement,
+    audio: HtmlAudioElement
 }
 
 impl ObstacleSpawner {
-    pub fn new(img_sheet: &HtmlImageElement) -> ObstacleSpawner {
+    pub fn new(img_sheet: &HtmlImageElement, audio: &HtmlAudioElement) -> ObstacleSpawner {
         ObstacleSpawner{
             may_caller: MayCaller::new(500, 1300, 2000),
             to_create: None,
             img_sheet: img_sheet.clone(),
+            audio: audio.clone()
         }
     }
 
     fn new_obstacle(&mut self) -> Box<dyn EngineEntity<GameData>>{
         let type_int = (Math::random() * 3.0).floor() as u8;
         match type_int {
-            0 => Box::new(CactusEntity::new_tiny(&self.img_sheet)),
-            1 => Box::new(CactusEntity::new_big(&self.img_sheet)),
-            _ => Box::new(PteroEntity::new(&self.img_sheet))
+            0 => Box::new(CactusEntity::new_tiny(&self.img_sheet, &self.audio)),
+            1 => Box::new(CactusEntity::new_big(&self.img_sheet, &self.audio)),
+            _ => Box::new(PteroEntity::new(&self.img_sheet, &self.audio))
         }
     }
 

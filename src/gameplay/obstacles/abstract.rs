@@ -4,16 +4,17 @@ use crate::engine::structs::texture::Texture;
 use crate::engine::traits::drawable::Drawable;
 use crate::gameplay::utils::gamedata::GameData;
 use wasm_bindgen::JsValue;
-use web_sys::CanvasRenderingContext2d;
+use web_sys::{CanvasRenderingContext2d, HtmlAudioElement};
 
 pub struct AbstractObstacle{
     sprite: Sprite,
-    rect: Rect
+    rect: Rect,
+    audio: HtmlAudioElement
 }
 
 impl AbstractObstacle {
-    pub fn new(sprite: Sprite, rect: Rect) -> AbstractObstacle {
-        AbstractObstacle{ sprite, rect }
+    pub fn new(sprite: Sprite, rect: Rect, audio: &HtmlAudioElement) -> AbstractObstacle {
+        AbstractObstacle{ sprite, rect, audio: audio.clone() }
     }
 
     pub fn approach(&mut self, delta_ms: u16, speed:f64){
@@ -36,6 +37,7 @@ impl AbstractObstacle {
         if data.dino_collision.collides(&self.rect) {
             data.pause = true;
             data.game_over = true;
+            let _ = self.audio.play();
         }
     }
 

@@ -23,7 +23,7 @@ js-sys = "0.3.70"
 
 [dependencies.web-sys]
 version = "0.3.70"
-features = ["HtmlElement", "DomTokenList", "HtmlCanvasElement", "CanvasRenderingContext2d", "HtmlImageElement", "console", "Window", "Storage", "Event", "KeyboardEvent", "Document"]
+features = ["HtmlElement", "DomTokenList", "HtmlCanvasElement", "CanvasRenderingContext2d", "HtmlImageElement", "HtmlAudioElement", "console", "Window", "Storage", "Event", "KeyboardEvent", "Document"]
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.13"
