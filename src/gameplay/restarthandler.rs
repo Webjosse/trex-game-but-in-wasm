@@ -20,6 +20,7 @@ impl Processable<GameData> for RestartHandler {
     fn process(&mut self, _delta_ms: u16, data: &mut GameData) -> Result<(), JsValue> {
         if self.exit_pause {
             data.pause = false;
+            data.game_over = false;
             self.exit_pause = false;
         }
         self.is_pause = data.pause;
