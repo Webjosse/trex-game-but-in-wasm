@@ -3,9 +3,8 @@ use crate::engine::structs::sprite::Sprite;
 use crate::engine::structs::texture::Texture;
 use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::{EngineEntity, StaticEntity};
-use crate::engine::traits::events::{Event, EventListener};
+use crate::engine::traits::events::EventListener;
 use crate::engine::traits::processable::Processable;
-use crate::events::binding::EventId;
 use crate::gameplay::gamedata::GameData;
 use crate::gameplay::CANVAS_W;
 use wasm_bindgen::JsValue;
@@ -15,7 +14,6 @@ use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
 pub struct GameOverEntity {
     sprite_game_over: Sprite,
     sprite_restart: Sprite,
-    restart: bool,
     show: bool
 }
 
@@ -33,7 +31,7 @@ impl GameOverEntity {
         sprite_restart.set_x((CANVAS_W - RS_W) / 2.0);
         sprite_restart.set_y(75.0);
         GameOverEntity{
-            sprite_restart, sprite_game_over, restart: false, show: false
+            sprite_restart, sprite_game_over, show: false
         }
     }
 }
@@ -50,26 +48,12 @@ impl Drawable for GameOverEntity {
 
 impl Processable<GameData> for GameOverEntity {
     fn process(&mut self, _delta_ms: u16, data: &mut GameData) -> Result<(), JsValue> {
-        if data.game_over && self.restart{
-            data.game_over = false;
-            data.pause = false;
-        }
-        self.restart = false;
         self.show = data.game_over;
         Ok(())
     }
 }
 
 impl EventListener for GameOverEntity {
-    fn handle(&mut self, evt: &Event) -> bool {
-        match EventId::from_int(evt.id){
-            EventId::RestartPressEvent => {
-                self.restart = true;
-                true
-            }
-            _ => false
-        }
-    }
 }
 
 impl StaticEntity<GameData> for GameOverEntity {} impl EngineEntity<GameData> for GameOverEntity {}

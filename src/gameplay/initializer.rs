@@ -11,6 +11,7 @@ use std::cell::RefCell;
 use web_sys::HtmlImageElement;
 use crate::gameplay::gameover::GameOverEntity;
 use crate::gameplay::restarthandler::RestartHandler;
+use crate::gameplay::start::StartEntity;
 
 pub struct GameInitializer{
     img: HtmlImageElement,
@@ -46,7 +47,9 @@ impl GameInitializer{
         ));
         self.controller.add_entity(Box::new(
             GameOverEntity::new(&self.img)
-        ))
+        ));
+        self.controller.add_entity(Box::new(StartEntity::new()));
+
 
     }
 

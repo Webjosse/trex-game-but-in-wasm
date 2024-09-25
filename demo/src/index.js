@@ -19,7 +19,6 @@ const game_loop =setInterval(() => {
 
 
 document.body.addEventListener("keydown", evt => runner.send(evt))
-
 document.body.addEventListener("keyup", evt => runner.send(evt))
-
 document.body.addEventListener("keypress", evt => runner.send(evt))
+CANVAS.addEventListener("click", evt => runner.send(evt))

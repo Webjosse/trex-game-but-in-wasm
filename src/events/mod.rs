@@ -7,8 +7,14 @@ use web_sys::{Event, KeyboardEvent};
 
 pub fn transform_event(event: &Event, listener: &mut dyn EventListener) {
     transform_keyboard_event(event, listener);
+    transform_click_event(event, listener);
 }
 
+fn transform_click_event(event: &Event, listener: &mut dyn EventListener) {
+    if event.type_().to_lowercase() == "click"{
+        listener.handle(&EngineEvent { id: EventId::from_click().as_int(), source: EventSource::EXTERNAL });
+    }
+}
 
 fn get_keyboard_ids(event: &KeyboardEvent) -> &'static [EventId]{
     match event.type_().to_lowercase().as_str() {

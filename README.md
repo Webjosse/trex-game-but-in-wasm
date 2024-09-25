@@ -4,6 +4,8 @@
 ![Author: Webjosse](https://img.shields.io/badge/author-Webjosse-cyan?style=flat-square)
 ![Scope: learning](https://img.shields.io/badge/scope-learning-yellow?style=flat-square)
 
+[![Deploy demo](https://github.com/Webjosse/trex-game-but-in-wasm/actions/workflows/demo.yml/badge.svg)](https://github.com/Webjosse/trex-game-but-in-wasm/actions/workflows/demo.yml)
+
 ## How to build
 You need to install 
 * Rustup + Cargo
@@ -31,4 +33,3 @@ For production: `npm run build`
 | [@Reachip](https://github.com/Reachip)       |
 | [@i5.650](https://github.com/i5-650)         |
 | [@PowerPixel](https://github.com/PowerPixel) |
-|                                              |

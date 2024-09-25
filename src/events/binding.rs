@@ -8,6 +8,10 @@ pub enum EventId{
 }
 
 impl EventId{
+    pub fn from_click() -> &'static EventId{
+        &EventId::RestartPressEvent
+    }
+
     pub fn from_keycode_down(key_code:u32) -> &'static [EventId]{
         match key_code {
             32 => &[EventId::JumpDownEvent],

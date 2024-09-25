@@ -11,9 +11,9 @@ impl GameData {
     pub(crate) fn new() -> GameData {
         GameData{
             dino_collision: Rect{x:0.0,y:0.0,w:0.0,h:0.0},
-            pause: false,
+            pause: true,
             game_over: false,
-            speed: 0.5
+            speed: 0.0
         }
     }
 }

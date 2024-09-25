@@ -17,6 +17,7 @@ mod obstacles;
 mod gamedata;
 mod gameover;
 mod restarthandler;
+mod start;
 
 pub const CANVAS_H: f64 = 160.0;
 

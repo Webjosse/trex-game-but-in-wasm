@@ -8,23 +8,35 @@ use wasm_bindgen::JsValue;
 
 ///This struct disables restart events if not game over
 pub struct RestartHandler{
-    is_game_over: bool
+    is_pause: bool,
+    exit_pause: bool
 }
 
 impl RestartHandler{
-    pub fn new() -> RestartHandler{ RestartHandler{ is_game_over: false } }
+    pub fn new() -> RestartHandler{ RestartHandler{ is_pause: false, exit_pause: false } }
 }
 
 impl Processable<GameData> for RestartHandler {
-    fn process(&mut self, _delta_ms: u16, _data: &mut GameData) -> Result<(), JsValue> {
-        self.is_game_over = _data.game_over;
+    fn process(&mut self, _delta_ms: u16, data: &mut GameData) -> Result<(), JsValue> {
+        if self.exit_pause {
+            data.pause = false;
+            self.exit_pause = false;
+        }
+        self.is_pause = data.pause;
         Ok(())
     }
 }
 
 impl EventListener for RestartHandler {
     fn handle(&mut self, evt: &Event) -> bool {
-        evt.id == EventId::RestartPressEvent.as_int() && !self.is_game_over
+        if evt.id != EventId::RestartPressEvent.as_int(){
+            return false
+        }
+        if self.is_pause {
+            self.exit_pause = true;
+            return false
+        }
+        true
     }
 }
 
