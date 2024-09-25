@@ -6,7 +6,7 @@ use crate::engine::traits::entity::{EngineEntity, StaticEntity};
 use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
 use crate::events::binding::EventId;
-use crate::gameplay::gamedata::GameData;
+use crate::gameplay::utils::gamedata::GameData;
 use crate::gameplay::FLOOR_LEVEL;
 use std::array::from_fn;
 use wasm_bindgen::JsValue;
@@ -21,7 +21,7 @@ fn init_dino_textures(img_sheet: &HtmlImageElement) -> [Texture;5]{
 
 fn init_dino_sneak_textures(img_sheet: &HtmlImageElement) -> [Texture;2]{
     from_fn(|i| {
-        Texture::new(img_sheet.clone(), Rect{x:939.0 + (i as f64 *59.0),y:19.0,w:59.0,h:30.0})
+        Texture::new(img_sheet.clone(), Rect{x:897.0 + (i as f64 *59.0),y:19.0,w:59.0,h:30.0})
     })
 }
 
@@ -42,7 +42,7 @@ pub struct DinoEntity {
 }
 
 const JUMP_FORCE: f64 = 12.0;
-const TIME_JUMP: f64 = 30.0;
+const TIME_JUMP: f64 = 20.0;
 
 impl DinoEntity {
     pub fn new(image_sheet: &HtmlImageElement) -> DinoEntity {

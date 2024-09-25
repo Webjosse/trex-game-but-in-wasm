@@ -3,7 +3,7 @@ use crate::engine::traits::entity::{EngineEntity, StaticEntity};
 use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
 use crate::events::binding::EventId;
-use crate::gameplay::gamedata::GameData;
+use crate::gameplay::utils::gamedata::GameData;
 use crate::gameplay::{CANVAS_H, CANVAS_W};
 use wasm_bindgen::JsValue;
 use web_sys::CanvasRenderingContext2d;

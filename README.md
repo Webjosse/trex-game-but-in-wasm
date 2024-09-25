@@ -4,7 +4,8 @@
 ![Author: Webjosse](https://img.shields.io/badge/author-Webjosse-cyan?style=flat-square)
 ![Scope: learning](https://img.shields.io/badge/scope-learning-yellow?style=flat-square)
 
-[![Deploy demo](https://github.com/Webjosse/trex-game-but-in-wasm/actions/workflows/demo.yml/badge.svg)](https://github.com/Webjosse/trex-game-but-in-wasm/actions/workflows/demo.yml)
+[![Deploy demo](https://github.com/Webjosse/trex-game-but-in-wasm/actions/workflows/demo.yml/badge.svg)](https://github.com/Webjosse/trex-game-but-in-wasm/actions/workflows/demo.yml)\
+🚀 **Test on [https://dino.webjosse.fr/](https://dino.webjosse.fr/)**
 
 ## How to build
 You need to install 

@@ -2,7 +2,7 @@ use crate::engine::structs::rect::Rect;
 use crate::engine::structs::sprite::Sprite;
 use crate::engine::structs::texture::Texture;
 use crate::engine::traits::drawable::Drawable;
-use crate::gameplay::gamedata::GameData;
+use crate::gameplay::utils::gamedata::GameData;
 use wasm_bindgen::JsValue;
 use web_sys::CanvasRenderingContext2d;
 

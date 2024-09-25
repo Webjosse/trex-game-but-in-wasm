@@ -9,7 +9,6 @@ use crate::events::transform_event;
 use std::cell::RefCell;
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::{JsCast, JsValue};
-use web_sys::console::debug_1;
 use web_sys::{window, CanvasRenderingContext2d, Event, HtmlCanvasElement};
 
 #[wasm_bindgen]
@@ -52,7 +51,6 @@ impl GameRunner {
             let err = controller.process(delta, &mut entity_count).err();
             if err.is_some() { return Err(err.unwrap()); }
         }
-        debug_1(&format!("Updated {} entities", entity_count.get_mut()).into());
         for controller in self.controllers.iter() {
             let err = controller.draw(&self.ctx).err();
             if err.is_some() { return Err(err.unwrap()); }

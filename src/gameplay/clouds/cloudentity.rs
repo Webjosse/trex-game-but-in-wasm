@@ -3,9 +3,8 @@ use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::{EngineEntity, StaticEntity};
 use crate::engine::traits::events::EventListener;
 use crate::engine::traits::processable::Processable;
-use crate::gameplay::gamedata::GameData;
+use crate::gameplay::utils::gamedata::GameData;
 use wasm_bindgen::JsValue;
-use web_sys::console::debug_1;
 use web_sys::CanvasRenderingContext2d;
 
 pub struct CloudEntity{
@@ -20,7 +19,6 @@ impl CloudEntity{
 
 impl Drawable for CloudEntity {
     fn draw(&self, ctx: &CanvasRenderingContext2d) -> Result<(), JsValue> {
-        debug_1(&format!("CLOUD DRAW : {} {}", self.sprite.get_rect().x.floor(), self.sprite.get_rect().y.floor()).into());
         self.sprite.draw(ctx)
     }
 }

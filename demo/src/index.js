@@ -2,7 +2,14 @@ import {init} from '../../pkg';
 
 const CANVAS = document.getElementById("game");
 
-const runner = init(CANVAS);
+const runner = init(CANVAS, () => {
+    const HTML_CLASSLIST = document.documentElement.classList;
+    if (HTML_CLASSLIST.contains("night-mode")){
+        HTML_CLASSLIST.remove("night-mode");
+    } else {
+        HTML_CLASSLIST.add("night-mode");
+    }
+});
 
 const rate = 1000 / 60; //30 fps -> ms
 

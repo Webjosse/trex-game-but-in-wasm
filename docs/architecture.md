@@ -23,12 +23,15 @@ interface GameRunner{
    */
   send(evt:Event);
 }
-const init = (canvas: HtmlCanvasElement) => GameRunner;
+const init = (
+    canvas: HtmlCanvasElement,
+    invertColors: () => void
+) => GameRunner;
 ```
 
 For now, we:
-* run on 30fps, so `deltaMs = 1000/30` ans update is called each `deltaMs` milliseconds
-* send `KeyUp`, `KeyDown` and `KeyPress` events
+* run on 60fps, so `deltaMs = 1000/60` and update is called each `deltaMs` milliseconds
+* send `Click`(canvas), `KeyUp`, `KeyDown` and `KeyPress` events
 
 ## Engine
 There is a hierarchy
@@ -42,9 +45,12 @@ There is a hierarchy
 | Name            | Role                                    |
 |-----------------|-----------------------------------------|
 | RestartHandler  | Catches restart events if not GAME OVER |
+| StartHandler    | Manages start animation                 |
 | BgEntity        | The background, with the floor          |
 | CloudsSpawner   | Used to spawn the clouds                |
 | DinoEntity      | The dino                                |
 | ObstacleSpawner | Used to spawn the obstacles             |
 | SpeedEntity     | Used only to increase speed over time   |
 | GameOverEntity  | Displays "GAME OVER"                    |
+| DayNightEntity  | Manages Day/Night cycle                 |
+| ScoreEntity     | Manages Score                           |

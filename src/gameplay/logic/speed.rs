@@ -2,7 +2,7 @@ use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::{EngineEntity, StaticEntity};
 use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
-use crate::gameplay::gamedata::GameData;
+use crate::gameplay::utils::gamedata::GameData;
 use wasm_bindgen::JsValue;
 use web_sys::js_sys::Math;
 

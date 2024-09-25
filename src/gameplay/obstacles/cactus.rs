@@ -5,19 +5,17 @@ use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::{EngineEntity, StaticEntity};
 use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
-use crate::gameplay::gamedata::GameData;
+use crate::events::binding::EventId;
 use crate::gameplay::obstacles::r#abstract::AbstractObstacle;
+use crate::gameplay::utils::gamedata::GameData;
 use crate::gameplay::{CANVAS_W, FLOOR_LEVEL};
 use wasm_bindgen::JsValue;
 use web_sys::js_sys::Math;
 use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
-use web_sys::console::debug_1;
-use crate::events::binding::EventId;
 
 fn init_a_small_cactus(image_sheet: &HtmlImageElement) -> Texture{
     let i = (Math::random() * 3.0).floor() as u8;
     let x: f64 = (i * (i+1) * 17) as f64/2.0 + 228.0;
-    debug_1(&format!("RECT => x: {}, w: {}", x, 17.0 * (i+1) as f64).into());
     Texture::new(image_sheet.clone(), Rect{x ,y:0.0,h:37.0,w:17.0* (i+1) as f64})
 }
 
@@ -54,7 +52,6 @@ impl CactusEntity{
 
     pub fn new_big(image_sheet: &HtmlImageElement) -> CactusEntity{
         let texture = init_a_big_cactus(image_sheet);
-        debug_1(&"BIG CACTUS".into());
         CactusEntity::new(texture)
     }
 }

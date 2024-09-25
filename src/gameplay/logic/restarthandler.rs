@@ -3,7 +3,7 @@ use crate::engine::traits::entity::{EngineEntity, StaticEntity};
 use crate::engine::traits::events::{Event, EventListener};
 use crate::engine::traits::processable::Processable;
 use crate::events::binding::EventId;
-use crate::gameplay::gamedata::GameData;
+use crate::gameplay::utils::gamedata::GameData;
 use wasm_bindgen::JsValue;
 
 ///This struct disables restart events if not game over

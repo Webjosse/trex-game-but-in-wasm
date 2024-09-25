@@ -8,7 +8,7 @@ use crate::engine::traits::entity::{EngineEntity, StaticEntity};
 use crate::engine::traits::events::EventListener;
 use crate::engine::traits::processable::Processable;
 use crate::gameplay::clouds::cloudentity::CloudEntity;
-use crate::gameplay::gamedata::GameData;
+use crate::gameplay::utils::gamedata::GameData;
 use crate::gameplay::{CANVAS_W, FLOOR_LEVEL};
 use crate::utils::random_call::poisson_may_call;
 use std::collections::VecDeque;

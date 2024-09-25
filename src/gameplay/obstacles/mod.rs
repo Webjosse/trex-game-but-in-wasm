@@ -6,7 +6,7 @@ use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::{EngineEntity, StaticEntity};
 use crate::engine::traits::events::EventListener;
 use crate::engine::traits::processable::Processable;
-use crate::gameplay::gamedata::GameData;
+use crate::gameplay::utils::gamedata::GameData;
 use crate::gameplay::obstacles::cactus::CactusEntity;
 use crate::utils::random_call::MayCaller;
 use std::collections::VecDeque;
