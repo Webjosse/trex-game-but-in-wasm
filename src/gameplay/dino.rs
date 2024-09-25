@@ -15,7 +15,7 @@ use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
 
 fn init_dino_textures(img_sheet: &HtmlImageElement) -> [Texture;5]{
     from_fn(|i| {
-        Texture::new(img_sheet.clone(), Rect{x:677.0 + (i as f64 *44.0),y:0.0,w:44.0,h:49.0})
+        Texture::new(img_sheet.clone(), Rect{x:677.0 + (i as f64 *44.0),y:4.0,w:44.0,h:45.0})
     })
 }
 
@@ -109,7 +109,7 @@ impl DinoEntity {
         // edit rect for collision
         let c_rect = Rect {
             x: d_rect.x+10.0, y: d_rect.y,
-            w: d_rect.w-20.0, h: d_rect.h
+            w: d_rect.w-20.0, h: d_rect.h - 4.0
         };
         data.dino_collision = c_rect;
     }

@@ -11,11 +11,19 @@ use crate::gameplay::{CANVAS_W, FLOOR_LEVEL};
 use wasm_bindgen::JsValue;
 use web_sys::js_sys::Math;
 use web_sys::{CanvasRenderingContext2d, HtmlImageElement};
+use web_sys::console::debug_1;
 
 fn init_a_small_cactus(image_sheet: &HtmlImageElement) -> Texture{
     let i = (Math::random() * 3.0).floor() as u8;
-    let x: f64 = ((i * i+1)as f64)/2.0 + 227.0;
+    let x: f64 = (i * (i+1) * 17) as f64/2.0 + 228.0;
+    debug_1(&format!("RECT => x: {}, w: {}", x, 17.0 * (i+1) as f64).into());
     Texture::new(image_sheet.clone(), Rect{x ,y:0.0,h:37.0,w:17.0* (i+1) as f64})
+}
+
+fn init_a_big_cactus(image_sheet: &HtmlImageElement) -> Texture{
+    let i = (Math::random() * 3.0).floor() as u8;
+    let x: f64 = ((i * (i+1) * 25)as f64)/2.0 + 332.0;
+    Texture::new(image_sheet.clone(), Rect{x ,y:3.0,h:47.0,w:25.0* (i+1) as f64})
 }
 
 pub struct CactusEntity{
@@ -23,8 +31,7 @@ pub struct CactusEntity{
 }
 
 impl CactusEntity{
-    pub fn new(image_sheet: &HtmlImageElement) -> CactusEntity{
-        let texture = init_a_small_cactus(image_sheet);
+    fn new(texture: Texture) -> CactusEntity{
         let mut sprite = Sprite::new(texture);
         sprite.set_x(CANVAS_W);
         sprite.set_y(FLOOR_LEVEL - sprite.get_rect().h);
@@ -36,6 +43,18 @@ impl CactusEntity{
         CactusEntity{
             obstacle: AbstractObstacle::new(sprite, rect)
         }
+    }
+
+    pub fn new_tiny(image_sheet: &HtmlImageElement) -> CactusEntity{
+        let texture = init_a_small_cactus(image_sheet);
+        CactusEntity::new(texture)
+    }
+
+
+    pub fn new_big(image_sheet: &HtmlImageElement) -> CactusEntity{
+        let texture = init_a_big_cactus(image_sheet);
+        debug_1(&"BIG CACTUS".into());
+        CactusEntity::new(texture)
     }
 }
 impl Drawable for CactusEntity {

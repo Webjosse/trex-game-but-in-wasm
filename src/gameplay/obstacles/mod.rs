@@ -1,5 +1,6 @@
 mod r#abstract;
 mod cactus;
+mod ptero;
 
 use crate::engine::traits::drawable::Drawable;
 use crate::engine::traits::entity::{EngineEntity, StaticEntity};
@@ -10,8 +11,9 @@ use crate::gameplay::obstacles::cactus::CactusEntity;
 use crate::utils::random_call::MayCaller;
 use std::collections::VecDeque;
 use wasm_bindgen::JsValue;
-use web_sys::console::debug_1;
 use web_sys::HtmlImageElement;
+use web_sys::js_sys::Math;
+use crate::gameplay::obstacles::ptero::PteroEntity;
 
 pub struct ObstacleSpawner{
     may_caller: MayCaller,
@@ -22,15 +24,23 @@ pub struct ObstacleSpawner{
 impl ObstacleSpawner {
     pub fn new(img_sheet: &HtmlImageElement) -> ObstacleSpawner {
         ObstacleSpawner{
-            may_caller: MayCaller::new(700, 1300, 2000),
+            may_caller: MayCaller::new(500, 1300, 2000),
             to_create: None,
             img_sheet: img_sheet.clone(),
         }
     }
 
+    fn new_obstacle(&mut self) -> Box<dyn EngineEntity<GameData>>{
+        let type_int = (Math::random() * 3.0).floor() as u8;
+        match type_int {
+            0 => Box::new(CactusEntity::new_tiny(&self.img_sheet)),
+            1 => Box::new(CactusEntity::new_big(&self.img_sheet)),
+            _ => Box::new(PteroEntity::new(&self.img_sheet))
+        }
+    }
+
     fn spawn(&mut self){
-        debug_1(&"Spawn !!".to_string().into());
-        self.to_create = Some(Box::new(CactusEntity::new(&self.img_sheet)))
+        self.to_create = Some(self.new_obstacle())
     }
 }
 
@@ -52,7 +62,6 @@ impl EngineEntity<GameData> for ObstacleSpawner {
         if self.to_create.is_none() { return v; }
         let cloud: Option<Box<dyn EngineEntity<GameData>>> = std::mem::replace(&mut self.to_create, None);
         v.push_back(cloud.unwrap());
-        debug_1(&format!("V: {:?}", v.len()).into());
         v
     }
 }

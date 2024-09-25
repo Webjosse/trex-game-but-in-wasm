@@ -73,6 +73,7 @@ impl Processable<GameData> for CloudsSpawner {
 impl StaticEntity<GameData> for CloudsSpawner {}
 
 impl EngineEntity<GameData> for CloudsSpawner {
+
     fn entities_to_create(&mut self) -> VecDeque<Box<dyn EngineEntity<GameData>>> {
         let mut to_return: VecDeque<Box<dyn EngineEntity<GameData>>> = VecDeque::new();
         if self.to_create.is_none() { return to_return; }
