@@ -104,7 +104,10 @@ impl Processable<GameData> for ScoreEntity {
         self.save_elapsed += delta_ms;
         self.process_save_hiscore(data);
 
-        if data.game_over { data.score = 0;}
+        if data.game_over {
+            data.score = 0;
+            self.blink_count = 2000;
+        }
         if data.pause { return Ok(()); }
 
         let plus_score = self.process_score(delta_ms, data);
