@@ -11,7 +11,11 @@ const runner = init(CANVAS, () => {
     }
 });
 
-const rate = 1000 / 60; //30 fps -> ms
+function isChromiumBased() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return userAgent.includes('chrome') || userAgent.includes('chromium') || userAgent.includes('crios');
+}
+const rate = 1000 / (isChromiumBased() ? 60 : 30); //fps -> ms
 
 
 
